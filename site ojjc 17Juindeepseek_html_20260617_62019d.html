@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OJJC - Organisation de la Jeunesse du Jubilé de Cocody</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{--rouge:#C0392B;--vert:#1A7A3C;--jaune:#F4C30A;--rouge-light:rgba(192,57,43,0.12);--vert-light:rgba(26,122,60,0.12);--jaune-light:rgba(244,195,10,0.15);--bg:#F8F6F0;--texte:#1C1C1C;--texte-muted:#6B6B6B;--ombre:0 8px 40px rgba(0,0,0,0.10);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--texte);overflow-x:hidden;}
+::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-thumb{background:var(--vert);border-radius:4px;}
+nav{position:sticky;top:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;padding:0.9rem 2.5rem;background:rgba(255,255,255,0.97);backdrop-filter:blur(14px);border-bottom:3px solid transparent;border-image:linear-gradient(90deg,var(--rouge),var(--jaune),var(--vert)) 1;box-shadow:0 2px 20px rgba(0,0,0,0.08);flex-wrap:wrap;}
+.nav-brand{display:flex;align-items:center;gap:0.75rem;}
+.nav-brand img{height:45px;width:auto;border-radius:8px;}
+.nav-brand-text{display:flex;flex-direction:column;}
+.nav-brand-eglise{font-size:0.7rem;font-weight:700;color:var(--vert);letter-spacing:1px;}
+.nav-brand-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:900;color:var(--rouge);line-height:1.2;}
+.nav-brand-sub{font-size:0.6rem;color:var(--texte-muted);letter-spacing:1px;text-transform:uppercase;}
+.nav-links{display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;}
+.nav-btn{padding:0.5rem 1.1rem;border-radius:50px;font-family:'Nunito',sans-serif;font-size:0.83rem;font-weight:700;cursor:pointer;transition:all 0.25s;border:none;letter-spacing:0.4px;}
+.nav-btn-ghost{background:transparent;color:var(--texte-muted);border:1.5px solid rgba(0,0,0,0.15);}
+.nav-btn-ghost:hover{border-color:var(--rouge);color:var(--rouge);}
+.nav-btn-primary{background:var(--rouge);color:#fff;}
+.nav-btn-primary:hover{background:#a93226;transform:translateY(-1px);}
+.nav-btn-admin{background:var(--vert);color:#fff;}
+.nav-btn-admin:hover{background:#145a30;transform:translateY(-1px);}
+.nav-btn-meditation{background:linear-gradient(135deg,#2980b9,#1a5276);color:#fff;}
+.nav-btn-meditation:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(41,128,185,0.4);}
+.security-badge{background:#27ae60;color:#fff;padding:0.2rem 0.8rem;border-radius:50px;font-size:0.6rem;font-weight:700;letter-spacing:1px;display:inline-flex;align-items:center;gap:0.3rem;}
+.page{display:none;}.page.active{display:block;}
+.hero{min-height:80vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:4rem 2rem;background:linear-gradient(160deg,rgba(255,255,255,0.92),rgba(253,249,238,0.92),rgba(240,250,244,0.92)), url('https://images.pexels.com/photos/852381/pexels-photo-852381.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');background-size:cover;background-position:center;}
+.hero::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.3);z-index:0;}
+.hero > *{position:relative;z-index:1;}
+.hero-content{max-width:1100px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:2;}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:linear-gradient(135deg,var(--rouge-light),var(--jaune-light));border:1px solid rgba(192,57,43,0.2);border-radius:50px;padding:0.4rem 1.1rem;font-size:0.77rem;font-weight:700;color:var(--rouge);letter-spacing:2px;text-transform:uppercase;margin-bottom:1.5rem;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,4vw,3.1rem);font-weight:900;line-height:1.1;margin-bottom:1rem;}
+.word-vert{color:var(--vert);}.word-rouge{color:var(--rouge);}
+.hero-welcome{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--vert);margin-bottom:0.5rem;}
+.hero-sub{font-size:1rem;color:var(--texte-muted);line-height:1.6;margin-bottom:0.75rem;text-align:justify;}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem;}
+.btn-hero{padding:0.85rem 2rem;border-radius:50px;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;transition:all 0.3s;border:none;}
+.btn-hero-main{background:linear-gradient(135deg,var(--rouge),#e74c3c);color:#fff;}
+.btn-hero-main:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(192,57,43,0.4);}
+.btn-hero-sec{background:transparent;color:var(--vert);border:2px solid var(--vert);}
+.btn-hero-sec:hover{background:var(--vert);color:#fff;transform:translateY(-3px);}
+.verset{border-left:4px solid var(--jaune);background:rgba(244,195,10,0.1);padding:0.5rem 1rem;border-radius:0 12px 12px 0;margin-bottom:1rem;font-style:italic;}
+.mockup-card-preview{width:270px;border-radius:16px;border:4px solid transparent;background:linear-gradient(white,white) padding-box,linear-gradient(135deg,var(--vert),var(--jaune),#fff) border-box;box-shadow:0 20px 60px rgba(0,0,0,0.14);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem;position:relative;overflow:hidden;transform:rotate(2deg);transition:transform 0.3s;}
+.mockup-card-preview:hover{transform:rotate(0deg) scale(1.03);}
+.mockup-wm{position:absolute;font-family:'Playfair Display',serif;font-size:5rem;font-weight:900;color:rgba(26,122,60,0.05);}
+.mockup-avatar{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--vert),var(--jaune));display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.8rem;margin-bottom:0.75rem;}
+.mockup-name{font-family:'Playfair Display',serif;font-weight:700;font-size:0.93rem;margin-bottom:0.2rem;}
+.mockup-role{font-size:0.68rem;color:var(--vert);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:0.75rem;}
+.mockup-bands{display:flex;gap:0.3rem;}
+.mockup-band{height:5px;width:38px;border-radius:3px;}
+.stats-section{background:linear-gradient(135deg,var(--vert),#145a30 40%,#0e3d20);padding:3rem 2rem;}
+.stats-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:2rem;text-align:center;}
+.stat-item{color:#fff;}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;}
+.stat-lbl{font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;opacity:0.8;margin-top:0.25rem;}
+.section{padding:5rem 2rem;}
+.section-inner{max-width:1200px;margin:0 auto;}
+.section-header{text-align:center;margin-bottom:3rem;}
+.section-tag{display:inline-block;background:var(--vert-light);color:var(--vert);font-size:0.73rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:0.35rem 1rem;border-radius:50px;margin-bottom:0.75rem;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.3rem);font-weight:900;margin-bottom:0.5rem;}
+.section-sub{color:var(--texte-muted);font-size:0.97rem;}
+.bar-deco{width:60px;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--rouge),var(--jaune),var(--vert));margin:0.75rem auto 0;}
+.activites-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;}
+.activite-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:var(--ombre);transition:transform 0.25s;}
+.activite-card:hover{transform:translateY(-4px);}
+.activite-media{width:100%;height:180px;object-fit:cover;display:block;}
+.activite-media-placeholder{width:100%;height:180px;background:linear-gradient(135deg,var(--vert-light),var(--jaune-light));display:flex;align-items:center;justify-content:center;font-size:3rem;}
+.activite-body{padding:1.25rem;}
+.activite-date{font-size:0.72rem;font-weight:700;color:var(--vert);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:0.4rem;}
+.activite-titre{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;margin-bottom:0.5rem;}
+.activite-desc{font-size:0.85rem;color:var(--texte-muted);}
+.presidents-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.5rem;}
+.president-card{background:#fff;border-radius:16px;padding:1.5rem;box-shadow:var(--ombre);border-top:4px solid var(--vert);text-align:center;transition:transform 0.25s;}
+.president-card:hover{transform:translateY(-3px);}
+.president-avatar{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--vert),var(--jaune));display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.8rem;margin:0 auto 0.75rem;overflow:hidden;}
+.president-avatar img{width:100%;height:100%;object-fit:cover;}
+.president-nom{font-family:'Playfair Display',serif;font-weight:900;font-size:1rem;margin-bottom:0.25rem;}
+.president-periode{font-size:0.78rem;color:var(--vert);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:0.4rem;}
+.president-note{font-size:0.78rem;color:var(--texte-muted);}
+footer{background:linear-gradient(135deg,#1a1a1a,#2c2c2c);padding:3.5rem 2rem;text-align:center;color:#fff;}
+.footer-inner{max-width:700px;margin:0 auto;}
+.footer-logo{display:flex;justify-content:center;margin-bottom:1rem;}
+.footer-logo img{height:50px;}
+.footer-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;margin-bottom:0.5rem;}
+.footer-sub{color:rgba(255,255,255,0.55);font-size:0.9rem;margin-bottom:1.75rem;}
+.btn-contact{display:inline-flex;align-items:center;gap:0.75rem;background:linear-gradient(135deg,var(--vert),#27ae60);color:#fff;padding:1rem 2.5rem;border-radius:50px;font-size:1.1rem;font-weight:800;text-decoration:none;transition:all 0.3s;font-family:'Nunito',sans-serif;cursor:pointer;border:none;}
+.btn-contact:hover{transform:translateY(-3px);}
+.footer-copy{margin-top:2rem;font-size:0.76rem;color:rgba(255,255,255,0.3);}
+.footer-bands{display:flex;height:4px;margin-top:1.5rem;border-radius:4px;overflow:hidden;}
+.footer-band{flex:1;}
+.modal{display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1rem;}
+.modal.active{display:flex;}
+.modal-box{background:#fff;border-radius:20px;width:100%;max-width:500px;box-shadow:0 30px 80px rgba(0,0,0,0.25);position:relative;overflow:hidden;max-height:90vh;overflow-y:auto;}
+.modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--rouge),var(--jaune),var(--vert));}
+.modal-box-lg{max-width:680px;}
+.modal-head{padding:2rem 2rem 1rem;text-align:center;}
+.modal-icon{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 1rem;}
+.modal-icon-rouge{background:linear-gradient(135deg,var(--rouge),#e74c3c);}
+.modal-icon-vert{background:linear-gradient(135deg,var(--vert),#27ae60);}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;margin-bottom:0.4rem;}
+.modal-sub{color:var(--texte-muted);font-size:0.88rem;}
+.modal-body{padding:0.75rem 2rem 2rem;}
+.modal-close{position:absolute;top:0.9rem;right:0.9rem;background:transparent;border:1.5px solid rgba(0,0,0,0.12);color:var(--texte-muted);width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.95rem;transition:all 0.2s;z-index:2;}
+.modal-close:hover{background:var(--rouge-light);color:var(--rouge);}
+.form-group{margin-bottom:1.1rem;}
+.form-label{display:block;font-size:0.78rem;font-weight:700;color:var(--texte-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:0.4rem;}
+.form-input,.form-select{width:100%;padding:0.75rem 1rem;border:1.5px solid rgba(0,0,0,0.1);border-radius:10px;font-family:'Nunito',sans-serif;font-size:0.93rem;color:var(--texte);background:#fff;outline:none;transition:border-color 0.2s;}
+.form-input:focus,.form-select:focus{border-color:var(--vert);box-shadow:0 0 0 3px rgba(26,122,60,0.1);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-error{color:#c0392b;font-size:0.83rem;display:none;padding:0.5rem 0;}
+.form-error.show{display:block;}
+.checkbox-group{display:flex;flex-direction:column;gap:0.45rem;}
+.checkbox-item{display:flex;align-items:center;gap:0.6rem;font-size:0.9rem;cursor:pointer;}
+.checkbox-item input{width:16px;height:16px;accent-color:var(--vert);}
+.btn-submit{width:100%;padding:0.9rem;background:linear-gradient(135deg,var(--rouge),#e74c3c);border:none;border-radius:12px;color:#fff;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;transition:all 0.3s;margin-top:0.5rem;}
+.btn-submit:hover{box-shadow:0 8px 25px rgba(192,57,43,0.4);transform:translateY(-2px);}
+.btn-vert{background:linear-gradient(135deg,var(--vert),#27ae60);}
+.btn-vert:hover{box-shadow:0 8px 25px rgba(26,122,60,0.4);}
+.toast{position:fixed;bottom:2rem;right:2rem;z-index:999999;background:var(--vert);color:#fff;padding:0.9rem 1.5rem;border-radius:12px;font-size:0.9rem;font-weight:600;transform:translateX(200%);transition:transform 0.4s;box-shadow:0 10px 30px rgba(0,0,0,0.15);}
+.toast.show{transform:translateX(0);}
+.membre-header{background:linear-gradient(135deg,var(--vert),#145a30);padding:3rem 2rem;text-align:center;}
+.membre-header h2{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:0.5rem;}
+.membre-header p{color:rgba(255,255,255,0.75);font-size:0.95rem;}
+.membre-content{max-width:880px;margin:0 auto;padding:2rem;}
+.tabs{display:flex;gap:0.5rem;margin-bottom:2rem;border-bottom:2px solid rgba(0,0,0,0.08);flex-wrap:wrap;}
+.tab-btn{padding:0.7rem 1.4rem;background:transparent;border:none;font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:700;color:var(--texte-muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.2s;}
+.tab-btn.active{color:var(--vert);border-bottom-color:var(--vert);}
+.tab-pane{display:none;}.tab-pane.active{display:block;}
+.form-card{background:#fff;border-radius:20px;padding:2rem;box-shadow:var(--ombre);margin-bottom:1.5rem;}
+.form-card-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;color:var(--vert);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.5rem;border-bottom:1px solid rgba(0,0,0,0.06);padding-bottom:0.75rem;}
+.photo-upload-zone{width:120px;height:120px;border-radius:50%;border:3px dashed rgba(26,122,60,0.3);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.25s;background:var(--vert-light);overflow:hidden;position:relative;margin:0 auto 1rem;}
+.photo-upload-zone:hover{border-color:var(--vert);}
+.photo-upload-zone img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+#carte-wrapper{display:flex;flex-direction:column;align-items:center;gap:1.5rem;padding:1rem 0 2rem;}
+.carte-flip-label{font-size:0.68rem;font-weight:800;color:var(--texte-muted);letter-spacing:3px;text-transform:uppercase;text-align:center;margin-bottom:0.3rem;}
+.carte-ojjc{width:380px;border-radius:20px;font-family:'Nunito',sans-serif;overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,0.22),0 8px 20px rgba(26,122,60,0.12);position:relative;}
+.carte-recto{background:#0f1923;min-height:225px;display:flex;flex-direction:column;position:relative;overflow:hidden;}
+.carte-recto::before{content:'';position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(26,122,60,0.3),transparent 70%);top:-80px;right:-70px;pointer-events:none;}
+.carte-recto-stripe{height:4px;background:linear-gradient(90deg,#1A7A3C 0%,#F4C30A 50%,#C0392B 100%);flex-shrink:0;}
+.carte-recto-top{padding:0.9rem 1.2rem 0.4rem;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;}
+.carte-logo-cross{display:flex;align-items:center;gap:0.5rem;}
+.carte-logo-icon{width:35px;height:35px;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.carte-logo-icon img{width:100%;height:100%;object-fit:cover;}
+.carte-logo-cross span{font-family:'Nunito',sans-serif;font-size:0.5rem;font-weight:900;color:rgba(255,255,255,0.8);line-height:1.3;text-transform:uppercase;letter-spacing:0.5px;max-width:180px;}
+.carte-recto-body{padding:0.5rem 1.2rem 0.6rem;display:flex;gap:0.9rem;align-items:center;position:relative;z-index:1;flex:1;}
+.carte-recto-photo{width:75px;height:75px;border-radius:12px;border:2px solid rgba(244,195,10,0.55);overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.35);font-size:2rem;flex-shrink:0;box-shadow:0 5px 16px rgba(0,0,0,0.35);}
+.carte-recto-photo img{width:100%;height:100%;object-fit:cover;}
+.carte-recto-info{flex:1;min-width:0;}
+.carte-recto-nom{font-family:'Nunito',sans-serif;font-size:0.9rem;font-weight:900;color:#fff;margin-bottom:0.05rem;letter-spacing:0.2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.carte-recto-label{font-size:0.5rem;color:#F4C30A;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:0.1rem;}
+.carte-recto-role{font-size:0.55rem;color:#F4C30A;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:0.2rem;}
+.carte-recto-line{display:flex;align-items:center;gap:0.35rem;margin-bottom:0.1rem;}
+.carte-recto-icon{font-size:0.55rem;color:rgba(255,255,255,0.3);width:12px;text-align:center;flex-shrink:0;}
+.carte-recto-line-text{font-size:0.55rem;color:rgba(255,255,255,0.6);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.carte-recto-bottom{background:rgba(255,255,255,0.05);border-top:1px solid rgba(255,255,255,0.07);padding:0.45rem 1.2rem;display:flex;justify-content:center;align-items:center;position:relative;z-index:1;}
+.carte-recto-statut{font-size:0.55rem;font-weight:900;color:#27ae60;letter-spacing:2px;text-transform:uppercase;background:rgba(26,122,60,0.2);padding:0.18rem 0.55rem;border-radius:20px;border:1px solid rgba(26,122,60,0.35);}
+.carte-verso{background:#f8f9fa;min-height:160px;display:flex;flex-direction:column;position:relative;overflow:hidden;}
+.carte-verso::before{content:'OJJC';position:absolute;font-family:'Nunito',sans-serif;font-size:5rem;font-weight:900;color:rgba(26,122,60,0.05);right:-5px;bottom:-10px;letter-spacing:-2px;pointer-events:none;}
+.carte-verso-stripe{height:4px;background:linear-gradient(90deg,#C0392B 0%,#F4C30A 50%,#1A7A3C 100%);flex-shrink:0;}
+.carte-verso-top{padding:0.6rem 1.2rem 0.3rem;display:flex;align-items:center;justify-content:center;}
+.carte-verso-org{flex:1;text-align:center;}
+.carte-verso-services-title{font-family:'Nunito',sans-serif;font-size:0.65rem;font-weight:900;color:#0f1923;line-height:1.2;text-transform:uppercase;}
+.carte-verso-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,0.07),transparent);margin:0 1rem;}
+.carte-verso-body{padding:0.5rem 1rem;flex:1;display:flex;flex-wrap:wrap;gap:0.4rem;justify-content:center;}
+.carte-verso-item{display:inline-block;background:var(--vert-light);color:var(--vert);font-size:0.6rem;font-weight:800;padding:0.15rem 0.5rem;border-radius:15px;}
+.carte-verso-bottom{background:linear-gradient(135deg,#0f1923,#1c2b3a);padding:0.35rem 1rem;display:flex;justify-content:center;align-items:center;}
+.carte-verso-bottom-text{font-size:0.45rem;color:rgba(255,255,255,0.6);letter-spacing:0.5px;text-transform:uppercase;font-weight:700;text-align:center;}
+.admin-header-bar{background:linear-gradient(135deg,var(--vert),#145a30);padding:2.5rem 2rem;}
+.admin-header-bar h2{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:900;color:#fff;}
+.admin-header-bar p{color:rgba(255,255,255,0.7);font-size:0.9rem;margin-top:0.3rem;}
+.admin-content{max-width:1280px;margin:0 auto;padding:2rem;}
+.admin-stat-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:2rem;}
+.admin-stat-card{background:#fff;border-radius:14px;padding:1.25rem;box-shadow:0 4px 20px rgba(0,0,0,0.06);text-align:center;border-top:3px solid var(--rouge);}
+.admin-stat-card.vert{border-top-color:var(--vert);}
+.admin-stat-card.jaune{border-top-color:var(--jaune);}
+.admin-stat-card.bleu{border-top-color:#2980b9;}
+.admin-stat-card.gris{border-top-color:#7f8c8d;}
+.admin-stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;}
+.admin-stat-lbl{font-size:0.73rem;color:var(--texte-muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:0.2rem;}
+.admin-tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.admin-tab-btn{padding:0.6rem 1.4rem;background:#fff;border:2px solid rgba(0,0,0,0.1);border-radius:50px;font-family:'Nunito',sans-serif;font-size:0.83rem;font-weight:700;color:var(--texte-muted);cursor:pointer;transition:all 0.2s;}
+.admin-tab-btn.active{background:var(--vert);color:#fff;border-color:var(--vert);}
+.admin-tab-btn.corbeille-btn{border-color:rgba(192,57,43,0.3);color:var(--rouge);}
+.admin-tab-btn.corbeille-btn.active{background:var(--rouge);color:#fff;border-color:var(--rouge);}
+.admin-section{display:none;}.admin-section.active{display:block;}
+.entite-tabs{display:flex;gap:0.5rem;margin-bottom:1.25rem;flex-wrap:wrap;}
+.entite-tab{padding:0.45rem 1.1rem;background:#fff;border:1.5px solid rgba(0,0,0,0.1);border-radius:50px;font-size:0.79rem;font-weight:700;color:var(--texte-muted);cursor:pointer;transition:all 0.2s;}
+.entite-tab.active{background:var(--vert);color:#fff;border-color:var(--vert);}
+.admin-table-wrap{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);}
+.admin-table-head{padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,0.07);flex-wrap:wrap;gap:0.75rem;}
+.admin-table-head h3{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;}
+.admin-table-actions{display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap;}
+.admin-search{padding:0.48rem 1rem;border:1.5px solid rgba(0,0,0,0.1);border-radius:50px;font-family:'Nunito',sans-serif;font-size:0.83rem;outline:none;width:190px;}
+.admin-search:focus{border-color:var(--vert);}
+table{width:100%;border-collapse:collapse;}
+thead tr{background:rgba(0,0,0,0.03);}
+th{padding:0.7rem 0.9rem;text-align:left;font-size:0.7rem;font-weight:700;color:var(--texte-muted);letter-spacing:1.5px;text-transform:uppercase;}
+td{padding:0.7rem 0.9rem;font-size:0.83rem;border-top:1px solid rgba(0,0,0,0.05);}
+tr:hover td{background:rgba(26,122,60,0.03);}
+.badge{display:inline-block;padding:0.18rem 0.65rem;border-radius:20px;font-size:0.68rem;font-weight:700;}
+.badge-actif{background:rgba(26,122,60,0.12);color:var(--vert);}
+.badge-resp{background:rgba(244,195,10,0.2);color:#856500;}
+.btn-tbl{padding:0.28rem 0.65rem;border:none;border-radius:7px;font-size:0.73rem;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.btn-tbl-edit{background:rgba(26,122,60,0.12);color:var(--vert);}
+.btn-tbl-edit:hover{background:var(--vert);color:#fff;}
+.btn-tbl-del{background:rgba(192,57,43,0.1);color:var(--rouge);}
+.btn-tbl-del:hover{background:var(--rouge);color:#fff;}
+.btn-tbl-restore{background:rgba(26,122,60,0.12);color:var(--vert);}
+.btn-tbl-restore:hover{background:var(--vert);color:#fff;}
+.btn-tbl-purge{background:rgba(192,57,43,0.1);color:var(--rouge);}
+.btn-tbl-purge:hover{background:var(--rouge);color:#fff;}
+.btn-export{padding:0.45rem 1rem;background:linear-gradient(135deg,#2980b9,#1a5276);color:#fff;border:none;border-radius:50px;font-family:'Nunito',sans-serif;font-size:0.79rem;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.btn-export:hover{transform:translateY(-1px);}
+.btn-danger{padding:0.45rem 1rem;background:linear-gradient(135deg,var(--rouge),#a93226);color:#fff;border:none;border-radius:50px;font-family:'Nunito',sans-serif;font-size:0.79rem;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.btn-danger:hover{transform:translateY(-1px);opacity:0.9;}
+.act-admin-card{background:#fff;border-radius:14px;padding:1.2rem;box-shadow:0 4px 14px rgba(0,0,0,0.06);margin-bottom:1rem;display:flex;gap:1rem;align-items:flex-start;border-left:4px solid var(--vert);}
+.act-admin-thumb{width:80px;height:68px;border-radius:8px;flex-shrink:0;background:var(--vert-light);display:flex;align-items:center;justify-content:center;font-size:1.5rem;overflow:hidden;}
+.act-admin-thumb img,.act-admin-thumb video{width:100%;height:100%;object-fit:cover;}
+.act-admin-info{flex:1;min-width:0;}
+.act-admin-titre{font-family:'Playfair Display',serif;font-weight:700;font-size:0.95rem;margin-bottom:0.22rem;}
+.act-admin-date{font-size:0.73rem;color:var(--vert);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:0.28rem;}
+.act-admin-desc{font-size:0.8rem;color:var(--texte-muted);}
+.pres-admin-card{background:#fff;border-radius:14px;padding:1.2rem;box-shadow:0 4px 14px rgba(0,0,0,0.06);margin-bottom:1rem;display:flex;gap:1rem;align-items:center;border-left:4px solid var(--jaune);}
+.bureau-admin-card{background:#fff;border-radius:14px;padding:1.2rem;box-shadow:0 4px 14px rgba(0,0,0,0.06);margin-bottom:1rem;display:flex;gap:1rem;align-items:center;border-left:4px solid var(--rouge);}
+.bureau-photo{width:60px;height:60px;border-radius:12px;background:var(--vert-light);display:flex;align-items:center;justify-content:center;font-size:2rem;overflow:hidden;flex-shrink:0;}
+.bureau-photo img{width:100%;height:100%;object-fit:cover;}
+.mandat-group{margin-bottom:2rem;}
+.mandat-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--vert);border-left:4px solid var(--rouge);padding-left:0.75rem;margin-bottom:1rem;}
+.media-upload-zone{border:2px dashed rgba(26,122,60,0.3);border-radius:12px;padding:1.25rem;text-align:center;cursor:pointer;transition:all 0.25s;background:var(--vert-light);}
+.media-upload-zone:hover{border-color:var(--vert);}
+.media-preview-list{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.75rem;}
+.media-preview-item{position:relative;width:68px;height:58px;border-radius:8px;overflow:hidden;background:#ddd;}
+.media-preview-item img,.media-preview-item video{width:100%;height:100%;object-fit:cover;}
+.media-preview-remove{position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:rgba(192,57,43,0.9);color:#fff;border:none;cursor:pointer;font-size:0.58rem;display:flex;align-items:center;justify-content:center;}
+.auth-riddle{background:var(--jaune-light);border:1px solid rgba(244,195,10,0.3);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;}
+.auth-riddle p{font-size:0.9rem;font-style:italic;color:#5a4200;font-weight:600;}
+.db-banner{background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;padding:0.5rem 1rem;font-size:0.75rem;text-align:center;letter-spacing:0.5px;}
+.corbeille-banner{background:linear-gradient(135deg,rgba(192,57,43,0.08),rgba(192,57,43,0.04));border:1.5px solid rgba(192,57,43,0.2);border-radius:14px;padding:1.1rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;}
+.corbeille-banner-icon{font-size:2rem;flex-shrink:0;}
+.corbeille-banner-text{flex:1;}
+.corbeille-banner-title{font-family:'Playfair Display',serif;font-weight:700;font-size:0.95rem;color:var(--rouge);margin-bottom:0.2rem;}
+.corbeille-banner-sub{font-size:0.8rem;color:var(--texte-muted);}
+.corbeille-row td{background:rgba(192,57,43,0.02);}
+.corbeille-row:hover td{background:rgba(192,57,43,0.05)!important;}
+.badge-supprime{background:rgba(192,57,43,0.12);color:var(--rouge);}
+.date-suppression{font-size:0.72rem;color:var(--rouge);font-weight:700;}
+.corbeille-empty{text-align:center;padding:3rem 2rem;color:var(--texte-muted);}
+.corbeille-empty-icon{font-size:3.5rem;margin-bottom:1rem;opacity:0.4;}
+.corbeille-empty-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:0.4rem;}
+.pw-blur{font-family:monospace;font-size:0.82rem;background:#f4f4f4;padding:0.15rem 0.5rem;border-radius:5px;color:#333;filter:blur(5px);cursor:pointer;transition:filter 0.25s;user-select:none;display:inline-block;}
+.pw-blur:hover,.pw-blur.revealed{filter:none;}
+.cantique-card{background:#fff;border-radius:12px;padding:1rem;margin-bottom:1rem;display:flex;gap:1rem;align-items:center;box-shadow:var(--ombre);}
+.cantique-icon{font-size:2rem;background:var(--vert-light);width:60px;height:60px;border-radius:12px;display:flex;align-items:center;justify-content:center;}
+.cantique-info{flex:1;}
+.cantique-title{font-weight:800;margin-bottom:0.2rem;}
+.cantique-download{background:var(--vert);color:#fff;border:none;border-radius:8px;padding:0.5rem 1rem;cursor:pointer;font-weight:700;}
+.comment-card{background:#fff;padding:1rem;border-radius:12px;margin-bottom:1rem;box-shadow:var(--ombre);}
+.comment-name{font-weight:800;color:var(--vert);margin-bottom:0.3rem;}
+.comment-text{font-size:0.9rem;color:var(--texte-muted);}
+.comment-date{font-size:0.7rem;color:var(--texte-muted);margin-top:0.3rem;text-align:right;}
+.logo-import-area{background:var(--vert-light);padding:1rem;border-radius:12px;margin-bottom:1.5rem;}
+.logo-preview{display:flex;align-items:center;gap:1rem;margin-top:0.5rem;}
+.logo-preview img{height:50px;border-radius:8px;border:1px solid var(--vert);}
+.game-card{background:#fff;border-radius:16px;padding:1.5rem;box-shadow:var(--ombre);margin-bottom:1rem;cursor:pointer;transition:transform 0.2s;border-left:4px solid var(--vert);}
+.game-card:hover{transform:translateY(-3px);}
+.game-card h3{font-family:'Playfair Display',serif;font-weight:700;color:var(--vert);}
+.game-progress{background:#eee;border-radius:10px;height:8px;margin:0.5rem 0;overflow:hidden;}
+.game-progress-bar{background:linear-gradient(90deg,var(--vert),var(--jaune));height:100%;border-radius:10px;transition:width 0.3s;}
+.game-option{display:block;padding:0.75rem;margin:0.3rem 0;border:2px solid #eee;border-radius:10px;cursor:pointer;transition:all 0.2s;}
+.game-option:hover{background:var(--vert-light);border-color:var(--vert);}
+.game-option.correct{background:var(--vert-light);border-color:var(--vert);}
+.game-option.wrong{background:var(--rouge-light);border-color:var(--rouge);}
+.game-option.disabled{pointer-events:none;opacity:0.7;}
+.game-score{font-size:1.2rem;font-weight:700;color:var(--vert);text-align:center;padding:1rem;}
+.game-level{text-align:center;font-weight:700;color:var(--rouge);margin-bottom:0.5rem;}
+.game-result{text-align:center;padding:2rem;}
+.game-result .score{font-size:3rem;font-weight:900;color:var(--vert);}
+.game-result .message{font-size:1.1rem;color:var(--texte-muted);margin-top:0.5rem;}
+.game-container{max-width:800px;margin:0 auto;}
+.game-admin-table{width:100%;border-collapse:collapse;margin-top:1rem;}
+.game-admin-table th,.game-admin-table td{padding:0.5rem;border:1px solid #ddd;}
+.game-admin-table th{background:var(--vert);color:#fff;}
+.game-level-selector{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;justify-content:center;}
+.game-level-btn{padding:0.5rem 1rem;border-radius:50px;border:2px solid var(--vert);background:#fff;color:var(--vert);font-weight:700;cursor:pointer;transition:all 0.2s;}
+.game-level-btn:hover{background:var(--vert-light);}
+.game-level-btn.active{background:var(--vert);color:#fff;}
+.game-answer-detail{font-size:0.8rem;color:var(--texte-muted);margin-top:0.3rem;padding:0.5rem;background:#f8f9fa;border-radius:8px;}
+.game-answer-detail .correct-answer{color:var(--vert);font-weight:700;}
+.game-answer-detail .wrong-answer{color:var(--rouge);font-weight:700;}
+.game-answer-detail .reference{color:#2980b9;font-weight:600;font-size:0.75rem;}
+.game-answer-summary{text-align:center;margin:0.5rem 0;padding:0.5rem;background:#f8f9fa;border-radius:10px;}
+.game-answer-summary .good{color:var(--vert);font-weight:700;}
+.game-answer-summary .bad{color:var(--rouge);font-weight:700;}
+.meditation-plan{background:#fff;border-radius:16px;padding:1.5rem;box-shadow:var(--ombre);margin-bottom:1rem;border-left:4px solid #2980b9;transition:transform 0.2s;cursor:pointer;}
+.meditation-plan:hover{transform:translateY(-2px);}
+.meditation-plan h3{font-family:'Playfair Display',serif;color:#2980b9;margin-bottom:0.5rem;}
+.meditation-plan .days{font-size:0.85rem;color:var(--texte-muted);}
+.meditation-plan .level{display:inline-block;background:#2980b9;color:#fff;padding:0.2rem 0.8rem;border-radius:50px;font-size:0.7rem;font-weight:700;margin-top:0.3rem;}
+.meditation-verse{background:#f8f9fa;padding:0.8rem;border-radius:8px;margin:0.3rem 0;border-left:3px solid #2980b9;}
+.meditation-verse .ref{font-weight:700;color:#2980b9;}
+.meditation-verse .text{font-style:italic;color:var(--texte-muted);}
+.meditation-day{background:#fff;border-radius:12px;padding:1rem;margin-bottom:0.5rem;border:1px solid #eee;}
+.meditation-day .day-title{font-weight:700;color:var(--vert);}
+.meditation-calendar{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:0.3rem;margin-top:1rem;}
+.meditation-calendar .day{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:#f0f0f0;font-size:0.7rem;cursor:pointer;transition:all 0.2s;}
+.meditation-calendar .day:hover{transform:scale(1.1);}
+.meditation-calendar .day.has-verse{background:var(--vert-light);border:2px solid var(--vert);font-weight:700;}
+.meditation-calendar .day.today{background:var(--vert);color:#fff;border:2px solid var(--vert);}
+
+/* Styles pour la Bible infinie */
+.bible-infinite{background:#fff;border-radius:16px;padding:2rem;box-shadow:var(--ombre);margin:2rem 0;}
+.bible-infinite-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;}
+.bible-infinite-controls{display:flex;gap:0.5rem;flex-wrap:wrap;}
+.bible-infinite-controls select,.bible-infinite-controls input{padding:0.5rem 1rem;border:1.5px solid rgba(0,0,0,0.1);border-radius:10px;font-family:'Nunito',sans-serif;font-size:0.9rem;background:#fff;}
+.bible-infinite-controls button{padding:0.5rem 1.2rem;border:none;border-radius:10px;background:var(--vert);color:#fff;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.bible-infinite-controls button:hover{background:#145a30;transform:translateY(-2px);}
+.bible-infinite-content{max-height:500px;overflow-y:auto;padding:1rem;background:#f8f9fa;border-radius:12px;font-size:0.95rem;line-height:1.8;}
+.bible-infinite-content .verse{display:flex;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid rgba(0,0,0,0.05);}
+.bible-infinite-content .verse .num{font-weight:700;color:var(--vert);min-width:30px;}
+.bible-infinite-content .verse .text{color:var(--texte);}
+.bible-infinite-footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:1rem;padding-top:1rem;border-top:1px solid #eee;}
+.bible-infinite-footer .info{font-size:0.85rem;color:var(--texte-muted);}
+.bible-infinite-footer .nav-buttons{display:flex;gap:0.5rem;}
+.bible-infinite-footer .nav-buttons button{padding:0.4rem 1rem;border:1.5px solid var(--vert);border-radius:8px;background:#fff;color:var(--vert);font-weight:700;cursor:pointer;transition:all 0.2s;}
+.bible-infinite-footer .nav-buttons button:hover{background:var(--vert);color:#fff;}
+
+@media(max-width:768px){nav{padding:0.85rem 1.1rem;}.hero-content{grid-template-columns:1fr;}.hero-mockup{display:none;}.form-row{grid-template-columns:1fr;}.admin-search{width:140px;}td,th{padding:0.55rem 0.55rem;}}
+</style>
+</head>
+<body>
+
+<div class="db-banner">📖 Bible infinie · Accès à toute la Parole de Dieu · Version Louis Segond</div>
+
+<nav>
+  <div class="nav-brand" id="nav-brand-container">
+    <img id="nav-logo-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231A7A3C'/%3E%3Ctext x='50' y='50' font-size='14' text-anchor='middle' fill='white' dy='.3em'%3EOJJC%3C/text%3E%3C/svg%3E" alt="Logo OJJC">
+    <div class="nav-brand-text">
+      <div class="nav-brand-eglise">Église Méthodiste de Côte d'Ivoire</div>
+      <div class="nav-brand-name">ORGANISATION DE LA JEUNESSE<br>DU JUBILÉ DE COCODY</div>
+      <div class="nav-brand-sub">Jeunesse dynamique pour le réveil spirituel</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <button class="nav-btn nav-btn-ghost" onclick="showPage('page-main')">Accueil</button>
+    <button class="nav-btn nav-btn-ghost" onclick="showPage('page-games')">🎮 Jeux</button>
+    <button class="nav-btn nav-btn-meditation" onclick="showPage('page-meditation')">📖 Méditation</button>
+    <button class="nav-btn nav-btn-primary" onclick="openModal('modal-login')">Mon Espace</button>
+    <button class="nav-btn nav-btn-admin" onclick="openAdminAuth()">Admin</button>
+    <span class="security-badge">🔒 Sécurisé</span>
+  </div>
+</nav>
+
+<!-- PAGE ACCUEIL -->
+<div id="page-main" class="page active">
+  <section class="hero">
+    <div class="hero-dec hero-dec-1"></div>
+    <div class="hero-dec hero-dec-2"></div>
+    <div class="hero-content">
+      <div>
+        <div class="hero-badge">✦ Actes 16:31 ✦</div>
+        <div class="verset">« Crois au Seigneur Jésus, et tu seras sauvé, toi et ta famille. »</div>
+        <div class="hero-welcome">🙏 Bienvenue chez nous OJJC !</div>
+        <h1><span class="word-vert">Organisation</span> de la <span class="word-rouge">Jeunesse</span><br>du Jubilé de Cocody</h1>
+        <p class="hero-sub">Né en 1975, l'Organisation de la jeunesse du jubilé de cocody (OJJC) se veut être un cadre rigoureux de formation spirituelle, mais aussi d'apprentissage, d'éducation et d'échange d'expérience. Recherchant en toute chose ce qui est bon, agréable et parfait aux yeux du SEIGNEUR.</p>
+        <div class="hero-cta">
+          <button class="btn-hero btn-hero-main" onclick="openModal('modal-register')">✍️ S'inscrire</button>
+          <button class="btn-hero btn-hero-sec" onclick="openModal('modal-login')">🔐 Connexion</button>
+          <button class="btn-hero btn-hero-sec" onclick="showPage('page-games')" style="border-color:var(--rouge);color:var(--rouge);">🎮 Jeux</button>
+          <button class="btn-hero btn-hero-sec" onclick="showPage('page-meditation')" style="border-color:#2980b9;color:#2980b9;">📖 Méditation</button>
+        </div>
+      </div>
+      <div class="hero-mockup" style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
+        <div style="font-size:0.76rem;color:var(--texte-muted);letter-spacing:2px;text-transform:uppercase;">Spécimen — Carte de membre</div>
+        <div class="mockup-card-preview">
+          <div class="mockup-wm">OJJC</div>
+          <div class="mockup-avatar">👤</div>
+          <div class="mockup-name">TON NOM ICI</div>
+          <div class="mockup-role">MEMBRE ACTIF OJJC</div>
+          <div style="font-size:0.63rem;color:var(--texte-muted);margin-bottom:0.5rem;">Famille Joie · Classe Béthanie</div>
+          <div class="mockup-bands">
+            <div class="mockup-band" style="background:var(--rouge);"></div>
+            <div class="mockup-band" style="background:var(--jaune);"></div>
+            <div class="mockup-band" style="background:var(--vert);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-section">
+    <div class="stats-inner">
+      <div class="stat-item"><div class="stat-num" id="hero-stat-membres">0</div><div class="stat-lbl">Membres inscrits</div></div>
+      <div class="stat-item"><div class="stat-num">5</div><div class="stat-lbl">Familles OJJC</div></div>
+      <div class="stat-item"><div class="stat-num">3</div><div class="stat-lbl">Entités OJJC</div></div>
+    </div>
+  </div>
+
+  <!-- BIBLE INFINIE -->
+  <section class="section" style="background:var(--bg);">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag">📖 La Parole de Dieu</div>
+        <h2 class="section-title">Bible Infinie</h2>
+        <div class="bar-deco"></div>
+        <p style="color:var(--texte-muted);margin-top:0.5rem;">Feuilletez la Bible sans fin — Chapitres et versets à l'infini</p>
+      </div>
+      <div class="bible-infinite" id="bible-infinite">
+        <div class="bible-infinite-header">
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <span style="font-size:1.5rem;">📖</span>
+            <span style="font-weight:700;font-size:1.1rem;" id="bible-current-book">Genèse</span>
+            <span style="color:var(--texte-muted);">chapitre <span id="bible-current-chapter">1</span></span>
+          </div>
+          <div class="bible-infinite-controls">
+            <select id="bible-book-select" onchange="changeBibleBook(this.value)">
+              <!-- Rempli par JS -->
+            </select>
+            <input type="number" id="bible-chapter-input" min="1" max="50" value="1" style="width:70px;" onchange="changeBibleChapter(parseInt(this.value))">
+            <button onclick="searchBibleInfinite()">🔍 Chercher</button>
+          </div>
+        </div>
+        <div class="bible-infinite-content" id="bible-infinite-content">
+          <div style="text-align:center;padding:2rem;color:var(--texte-muted);">Chargement de la Bible...</div>
+        </div>
+        <div class="bible-infinite-footer">
+          <div class="info">
+            <span id="bible-verse-count">0 versets</span> · 
+            <span id="bible-chapter-info">Chapitre 1 sur 50</span>
+          </div>
+          <div class="nav-buttons">
+            <button onclick="prevChapter()">◀ Chapitre précédent</button>
+            <button onclick="nextChapter()">Chapitre suivant ▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:#fff;">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag">Notre Organisation</div>
+        <h2 class="section-title">Qui sommes-nous ?</h2>
+        <div class="bar-deco"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.5rem;max-width:860px;margin:0 auto;">
+        <div style="background:var(--rouge-light);border-radius:16px;padding:1.5rem;border-left:4px solid var(--rouge);">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">✝️</div>
+          <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;margin-bottom:0.4rem;">Foi & Engagement</div>
+          <div style="font-size:0.83rem;color:var(--texte-muted);">Nous grandissons ensemble dans la foi méthodiste.</div>
+        </div>
+        <div style="background:var(--vert-light);border-radius:16px;padding:1.5rem;border-left:4px solid var(--vert);">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">🤝</div>
+          <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;margin-bottom:0.4rem;">Fraternité</div>
+          <div style="font-size:0.83rem;color:var(--texte-muted);">5 familles, une seule âme — OJJC pour Jésus-Christ.</div>
+        </div>
+        <div style="background:var(--jaune-light);border-radius:16px;padding:1.5rem;border-left:4px solid var(--jaune);">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">🎵</div>
+          <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;margin-bottom:0.4rem;">Louange</div>
+          <div style="font-size:0.83rem;color:var(--texte-muted);">Chorale, chantres — la musique à la gloire de Dieu.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--bg);">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag">Nos Activités</div>
+        <h2 class="section-title">Ce que nous avons vécu</h2>
+        <div class="bar-deco"></div>
+      </div>
+      <div class="activites-grid" id="activites-pub"><p style="text-align:center;padding:2rem;color:var(--texte-muted);">Aucune activité pour le moment.</p></div>
+    </div>
+  </section>
+
+  <section class="section" style="background:#fff;">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag">Nos Cantiques</div>
+        <h2 class="section-title">Louange et Adoration</h2>
+        <div class="bar-deco"></div>
+      </div>
+      <div id="cantiques-public-list"><p style="text-align:center;padding:2rem;color:var(--texte-muted);">Aucun cantique disponible.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo"><img id="footer-logo-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231A7A3C'/%3E%3Ctext x='50' y='50' font-size='14' text-anchor='middle' fill='white' dy='.3em'%3EOJJC%3C/text%3E%3C/svg%3E" alt="OJJC"></div>
+      <div class="footer-title">Nous contacter</div>
+      <p class="footer-sub">Pour toute information, question ou collaboration.</p>
+      <a class="btn-contact" href="tel:+2250556260742">📞 Appeler le 05 56 26 07 42</a>
+      <div class="footer-copy">© 2025 OJJC — Organisation de la Jeunesse du Jubilé de Cocody · Église Méthodiste de Côte d'Ivoire<br>Développé par Merica ACKOUN</div>
+      <div class="footer-bands">
+        <div class="footer-band" style="background:var(--rouge);"></div>
+        <div class="footer-band" style="background:var(--jaune);"></div>
+        <div class="footer-band" style="background:var(--vert);"></div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- PAGE JEUX -->
+<div id="page-games" class="page">
+  <div class="membre-header" style="background:linear-gradient(135deg,#8B6508,#D4A017);">
+    <h2>🎮 Jeux Bibliques</h2>
+    <p>10 jeux · 10 niveaux · 20 questions par niveau</p>
+  </div>
+  <div class="membre-content">
+    <div id="game-login" style="max-width:500px;margin:0 auto;">
+      <div class="form-card">
+        <div class="form-card-title">👤 Entrez votre nom pour jouer</div>
+        <div class="form-group"><input class="form-input" type="text" id="game-username" placeholder="Votre nom"></div>
+        <button class="btn-submit btn-vert" onclick="loginGame()">🎮 Jouer</button>
+      </div>
+    </div>
+    <div id="game-dashboard" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;">
+        <h3>👋 Bonjour, <span id="game-username-display"></span></h3>
+        <div><span style="background:var(--vert);color:#fff;padding:0.3rem 1rem;border-radius:50px;">🏆 Meilleur score : <span id="game-best-score">0</span>%</span>
+        <button class="btn-tbl-del" onclick="logoutGame()" style="margin-left:0.5rem;">🚪 Quitter</button></div>
+      </div>
+      <div id="game-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE MÉDITATION -->
+<div id="page-meditation" class="page">
+  <div class="membre-header" style="background:linear-gradient(135deg,#2980b9,#1a5276);">
+    <h2>📖 Méditation Biblique</h2>
+    <p>25 thèmes pour grandir dans la foi</p>
+  </div>
+  <div class="membre-content">
+    <div id="meditation-selector">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;" id="meditation-plans-list"></div>
+    </div>
+    <div id="meditation-viewer" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;">
+        <h3 id="meditation-plan-title"></h3>
+        <button class="btn-tbl-del" onclick="closeMeditation()">✕ Fermer</button>
+      </div>
+      <div id="meditation-calendar-container"></div>
+      <div id="meditation-day-content" style="margin-top:1.5rem;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE ADMIN -->
+<div id="page-admin" class="page">
+  <div class="admin-header-bar">
+    <h2>🛠 Tableau de Bord — Administration OJJC</h2>
+    <p>Gestion des membres, activités, cantiques, présidents et bureau</p>
+  </div>
+  <div class="admin-content">
+    <div class="admin-stat-bar">
+      <div class="admin-stat-card"><div class="admin-stat-num" id="a-total">0</div><div class="admin-stat-lbl">Total membres</div></div>
+      <div class="admin-stat-card vert"><div class="admin-stat-num" id="a-actif">0</div><div class="admin-stat-lbl">Membres actifs</div></div>
+      <div class="admin-stat-card jaune"><div class="admin-stat-num" id="a-resp">0</div><div class="admin-stat-lbl">Responsables</div></div>
+      <div class="admin-stat-card bleu"><div class="admin-stat-num" id="a-nb-act">0</div><div class="admin-stat-lbl">Activités</div></div>
+    </div>
+    <div class="admin-tabs">
+      <button class="admin-tab-btn active" onclick="switchAdminTab('as-membres',this)">👥 Membres</button>
+      <button class="admin-tab-btn" onclick="switchAdminTab('as-activites',this)">📸 Activités</button>
+      <button class="admin-tab-btn" onclick="switchAdminTab('as-cantiques',this)">🎵 Cantiques</button>
+      <button class="admin-tab-btn" onclick="switchAdminTab('as-presidents',this)">👑 Présidents</button>
+      <button class="admin-tab-btn" onclick="switchAdminTab('as-bureau',this)">🏛️ Bureau</button>
+      <button class="admin-tab-btn corbeille-btn" onclick="switchAdminTab('as-corbeille',this)">🗑️ Anciens Membres</button>
+      <button class="admin-tab-btn" style="border-color:rgba(80,0,80,0.3);color:#500050;" onclick="openInterditAuth()">🔐 Interdit</button>
+    </div>
+
+    <div id="as-membres" class="admin-section active">
+      <div class="admin-table-wrap">
+        <div class="admin-table-head">
+          <h3>📋 Tous les membres</h3>
+          <div class="admin-table-actions">
+            <input class="admin-search" type="text" placeholder="🔍 Rechercher..." oninput="renderMembres(this.value)">
+            <button class="btn-export" onclick="exportCSV()">⬇️ Exporter (CSV)</button>
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead><tr><th>#</th><th>Nom & Prénoms</th><th>Code adhérent</th><th>Contact</th><th>Famille</th><th>Statut</th></tr></thead>
+            <tbody id="admin-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="as-activites" class="admin-section">
+      <div class="form-card" style="margin-bottom:1.5rem;">
+        <div class="form-card-title">➕ Ajouter une activité</div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Titre *</label><input class="form-input" type="text" id="act-titre" placeholder="Ex: Camp de jeunesse 2024"></div>
+          <div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date" id="act-date"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Description</label><input class="form-input" type="text" id="act-desc" placeholder="Brève description..."></div>
+        <button class="btn-submit btn-vert" onclick="addActivite()">✅ Publier l'activité</button>
+      </div>
+      <div id="activites-admin-list"></div>
+    </div>
+
+    <div id="as-cantiques" class="admin-section">
+      <div class="form-card" style="margin-bottom:1.5rem;">
+        <div class="form-card-title">➕ Ajouter un cantique</div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Titre *</label><input class="form-input" type="text" id="cantique-titre" placeholder="Ex: À toi la gloire"></div>
+          <div class="form-group"><label class="form-label">Type</label>
+            <select class="form-select" id="cantique-type"><option>Audio</option><option>Vidéo</option><option>PDF</option></select>
+          </div>
+        </div>
+        <div class="form-group"><label class="form-label">Fichier</label><input type="file" id="cantique-file" accept="audio/*,video/*,application/pdf"></div>
+        <button class="btn-submit btn-vert" onclick="addCantique()">✅ Publier</button>
+      </div>
+      <div id="cantiques-admin-list"></div>
+    </div>
+
+    <div id="as-presidents" class="admin-section">
+      <div class="form-card" style="margin-bottom:1.5rem;">
+        <div class="form-card-title">➕ Ajouter un Président</div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Nom *</label><input class="form-input" type="text" id="pres-nom" placeholder="Ex: KOUAMÉ Jean"></div>
+          <div class="form-group"><label class="form-label">Période *</label><input class="form-input" type="text" id="pres-periode" placeholder="Ex: 2018 – 2020"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Note</label><input class="form-input" type="text" id="pres-note" placeholder="Description..."></div>
+        <button class="btn-submit btn-vert" onclick="addPresident()">✅ Ajouter</button>
+      </div>
+      <div id="presidents-admin-list"></div>
+    </div>
+
+    <div id="as-bureau" class="admin-section">
+      <div class="form-card" style="margin-bottom:1.5rem;">
+        <div class="form-card-title">➕ Ajouter un membre du bureau</div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Nom *</label><input class="form-input" type="text" id="bureau-nom" placeholder="Ex: KOUAMÉ Jean"></div>
+          <div class="form-group"><label class="form-label">Mandat *</label><input class="form-input" type="text" id="bureau-mandat" placeholder="Ex: 2023 - 2025"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Responsabilité *</label><input class="form-input" type="text" id="bureau-resp" placeholder="Ex: Président"></div>
+        <button class="btn-submit btn-vert" onclick="addBureauMembre()">✅ Ajouter</button>
+      </div>
+      <div id="bureau-admin-list"></div>
+    </div>
+
+    <div id="as-corbeille" class="admin-section">
+      <div class="admin-table-wrap">
+        <div class="admin-table-head"><h3>🗑️ Anciens membres</h3></div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead><tr><th>#</th><th>Nom</th><th>Famille</th><th>Supprimé le</th><th>Actions</th></tr></thead>
+            <tbody id="corbeille-tbody"><tr><td colspan="5">Corbeille vide</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="as-interdit" class="admin-section">
+      <div class="admin-table-wrap">
+        <div class="admin-table-head">
+          <h3>🔐 Identifiants des membres</h3>
+          <div class="admin-table-actions">
+            <input class="admin-search" type="text" placeholder="🔍 Rechercher..." oninput="renderInterdit(this.value)">
+            <button class="btn-export" style="background:linear-gradient(135deg,#500050,#7f0000);" onclick="exportInterditCSV()">⬇️ Exporter</button>
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead><tr><th>#</th><th>Nom</th><th>Code adhérent</th><th>Identifiant</th><th>Mot de passe</th><th>Famille</th></tr></thead>
+            <tbody id="interdit-tbody"><tr><td colspan="6">Accès restreint</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALES -->
+<div class="modal" id="modal-register">
+  <div class="modal-box"><button class="modal-close" onclick="closeModal('modal-register')">✕</button>
+    <div class="modal-head"><div class="modal-icon modal-icon-rouge">✝️</div><div class="modal-title">Créer mon compte</div></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Nom d'utilisateur *</label><input class="form-input" type="text" id="reg-username" placeholder="Ex: kouame_jean"></div>
+      <div class="form-group"><label class="form-label">Mot de passe *</label><input class="form-input" type="password" id="reg-password" placeholder="••••••••"></div>
+      <div class="form-group"><label class="form-label">Confirmer *</label><input class="form-input" type="password" id="reg-password2" placeholder="••••••••"></div>
+      <div class="form-group"><label class="form-label">Question secrète *</label><input class="form-input" type="text" id="reg-secret" placeholder="Ton verset préféré"></div>
+      <div class="form-error" id="reg-error"></div>
+      <button class="btn-submit" onclick="registerUser()">✅ Créer</button>
+      <p style="text-align:center;margin-top:0.75rem;font-size:0.83rem;">Déjà membre ? <a href="#" onclick="closeModal('modal-register');openModal('modal-login');return false;" style="color:var(--rouge);font-weight:700;">Se connecter</a></p>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-login">
+  <div class="modal-box"><button class="modal-close" onclick="closeModal('modal-login')">✕</button>
+    <div class="modal-head"><div class="modal-icon modal-icon-vert">🔐</div><div class="modal-title">Connexion</div></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Identifiant / Code</label><input class="form-input" type="text" id="login-username" placeholder="Ton identifiant"></div>
+      <div class="form-group"><label class="form-label">Mot de passe</label><input class="form-input" type="password" id="login-password" placeholder="••••••••"></div>
+      <div class="form-error" id="login-error"></div>
+      <button class="btn-submit btn-vert" onclick="loginUser()">→ Accéder</button>
+      <p style="text-align:center;margin-top:0.75rem;font-size:0.83rem;">Pas encore inscrit ? <a href="#" onclick="closeModal('modal-login');openModal('modal-register');return false;" style="color:var(--rouge);font-weight:700;">Créer un compte</a></p>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-admin-auth">
+  <div class="modal-box"><button class="modal-close" onclick="closeModal('modal-admin-auth')">✕</button>
+    <div class="modal-head"><div class="modal-icon modal-icon-vert">🛡️</div><div class="modal-title">Accès Administrateur</div></div>
+    <div class="modal-body">
+      <div class="auth-riddle"><p>❓ Quand je dis <strong>OJJC</strong>… tu dis ?</p></div>
+      <div class="form-group"><input class="form-input" type="text" id="admin-auth-input" placeholder="Ta réponse..." style="text-transform:uppercase;"></div>
+      <div class="form-error" id="admin-auth-error"></div>
+      <button class="btn-submit btn-vert" onclick="checkAdminAuth()">✅ Valider</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-interdit-auth">
+  <div class="modal-box"><button class="modal-close" onclick="closeModal('modal-interdit-auth')">✕</button>
+    <div class="modal-head"><div class="modal-icon modal-icon-rouge">🔐</div><div class="modal-title">Accès Interdit</div></div>
+    <div class="modal-body">
+      <div class="auth-riddle"><p>❓ Code secret : <strong>ojjc bénie</strong></p></div>
+      <div class="form-group"><input class="form-input" type="text" id="interdit-auth-input" placeholder="Réponse..." style="text-transform:uppercase;"></div>
+      <div class="form-error" id="interdit-auth-error"></div>
+      <button class="btn-submit btn-vert" onclick="checkInterditAuth()">✅ Valider</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// VARIABLES GLOBALES
+// ============================================================
+var currentUser = null;
+var interditAuthorized = false;
+var currentGamePlayer = null;
+var DB = { users: {}, fiches: {}, activites: [], presidents: [], corbeille: [], bureau: [], cantiques: [], comments: [], gameResults: [] };
+
+// Variables pour la Bible infinie
+var BIBLE_BOOKS = [
+    "Genèse", "Exode", "Lévitique", "Nombres", "Deutéronome",
+    "Josué", "Juges", "Ruth", "1 Samuel", "2 Samuel",
+    "1 Rois", "2 Rois", "1 Chroniques", "2 Chroniques", "Esdras",
+    "Néhémie", "Esther", "Job", "Psaumes", "Proverbes",
+    "Ecclésiaste", "Cantique des Cantiques", "Ésaïe", "Jérémie", "Lamentations",
+    "Ézéchiel", "Daniel", "Osée", "Joël", "Amos",
+    "Abdias", "Jonas", "Michée", "Nahum", "Habakuk",
+    "Sophonie", "Aggée", "Zacharie", "Malachie", "Matthieu",
+    "Marc", "Luc", "Jean", "Actes", "Romains",
+    "1 Corinthiens", "2 Corinthiens", "Galates", "Éphésiens", "Philippiens",
+    "Colossiens", "1 Thessaloniciens", "2 Thessaloniciens", "1 Timothée", "2 Timothée",
+    "Tite", "Philémon", "Hébreux", "Jacques", "1 Pierre",
+    "2 Pierre", "1 Jean", "2 Jean", "3 Jean", "Jude", "Apocalypse"
+];
+
+var currentBookIndex = 0;
+var currentChapter = 1;
+var bibleCache = {};
+var isBibleLoading = false;
+
+// ============================================================
+// FONCTIONS DE BASE
+// ============================================================
+function showToast(msg, color) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.background = color || 'var(--vert)';
+    t.classList.add('show');
+    setTimeout(function(){ t.classList.remove('show'); }, 3500);
+}
+
+function openModal(id) { document.getElementById(id).classList.add('active'); }
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+function showPage(id) {
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+    if(id === 'page-meditation') renderMeditationPlans();
+    if(id === 'page-games') renderGameList();
+    if(id === 'page-admin') refreshAdminStats();
+}
+
+// ============================================================
+// SÉCURITÉ
+// ============================================================
+function encrypt(data) {
+    try {
+        var json = JSON.stringify(data);
+        var result = '';
+        var key = 'OJJC-SECURE-2026-KEY';
+        for (var i = 0; i < json.length; i++) {
+            var charCode = json.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+            result += String.fromCharCode(charCode);
+        }
+        return btoa(result);
+    } catch(e) { return null; }
+}
+
+function decrypt(encrypted) {
+    try {
+        var decoded = atob(encrypted);
+        var result = '';
+        var key = 'OJJC-SECURE-2026-KEY';
+        for (var i = 0; i < decoded.length; i++) {
+            var charCode = decoded.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+            result += String.fromCharCode(charCode);
+        }
+        return JSON.parse(result);
+    } catch(e) { return null; }
+}
+
+function sanitize(input) {
+    if (typeof input !== 'string') return input;
+    return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
+}
+
+// ============================================================
+// BASE DE DONNÉES
+// ============================================================
+function dbLoadAll() {
+    try {
+        var users = localStorage.getItem('secure_users');
+        if (users) DB.users = decrypt(users) || {};
+        var fiches = localStorage.getItem('secure_fiches');
+        if (fiches) DB.fiches = decrypt(fiches) || {};
+        var activites = localStorage.getItem('secure_activites');
+        if (activites) DB.activites = decrypt(activites) || [];
+        var presidents = localStorage.getItem('secure_presidents');
+        if (presidents) DB.presidents = decrypt(presidents) || [];
+        var corbeille = localStorage.getItem('secure_corbeille');
+        if (corbeille) DB.corbeille = decrypt(corbeille) || [];
+        var bureau = localStorage.getItem('secure_bureau');
+        if (bureau) DB.bureau = decrypt(bureau) || [];
+        var cantiques = localStorage.getItem('secure_cantiques');
+        if (cantiques) DB.cantiques = decrypt(cantiques) || [];
+        var comments = localStorage.getItem('secure_comments');
+        if (comments) DB.comments = decrypt(comments) || [];
+        var gameResults = localStorage.getItem('secure_gameResults');
+        if (gameResults) DB.gameResults = decrypt(gameResults) || [];
+    } catch(e) { console.error('Erreur chargement:', e); }
+    updateHeroStat();
+}
+
+function saveAll() {
+    try {
+        localStorage.setItem('secure_users', encrypt(DB.users));
+        localStorage.setItem('secure_fiches', encrypt(DB.fiches));
+        localStorage.setItem('secure_activites', encrypt(DB.activites));
+        localStorage.setItem('secure_presidents', encrypt(DB.presidents));
+        localStorage.setItem('secure_corbeille', encrypt(DB.corbeille));
+        localStorage.setItem('secure_bureau', encrypt(DB.bureau));
+        localStorage.setItem('secure_cantiques', encrypt(DB.cantiques));
+        localStorage.setItem('secure_comments', encrypt(DB.comments));
+        localStorage.setItem('secure_gameResults', encrypt(DB.gameResults));
+    } catch(e) { console.error('Erreur sauvegarde:', e); }
+}
+
+// ============================================================
+// UTILISATEURS
+// ============================================================
+function registerUser() {
+    var u = document.getElementById('reg-username').value.trim().toLowerCase();
+    var p = document.getElementById('reg-password').value;
+    var p2 = document.getElementById('reg-password2').value;
+    var secret = document.getElementById('reg-secret').value.trim();
+    var err = document.getElementById('reg-error');
+    err.classList.remove('show');
+    
+    if (!u || u.length < 3) { err.textContent = 'Nom d\'utilisateur trop court (min 3)'; err.classList.add('show'); return; }
+    if (p.length < 6) { err.textContent = 'Mot de passe trop court (min 6)'; err.classList.add('show'); return; }
+    if (p !== p2) { err.textContent = 'Les mots de passe ne correspondent pas'; err.classList.add('show'); return; }
+    if (!secret || secret.length < 3) { err.textContent = 'Question secrète trop courte'; err.classList.add('show'); return; }
+    if (DB.users[u]) { err.textContent = 'Utilisateur existe déjà'; err.classList.add('show'); return; }
+    
+    var nextId = Object.keys(DB.users).length + 1;
+    var memberCode = 'ojjc-' + String(nextId).padStart(4, '0');
+    
+    DB.users[u] = {
+        password: encrypt(p),
+        createdAt: new Date().toISOString(),
+        secretAnswer: encrypt(secret),
+        memberCode: memberCode
+    };
+    saveAll();
+    closeModal('modal-register');
+    showToast('✅ Compte créé ! Code: ' + memberCode);
+    openModal('modal-login');
+}
+
+function loginUser() {
+    var input = document.getElementById('login-username').value.trim().toLowerCase();
+    var p = document.getElementById('login-password').value;
+    var err = document.getElementById('login-error');
+    err.classList.remove('show');
+    
+    var foundUser = null;
+    for (var u in DB.users) {
+        if (u === input || (DB.users[u].memberCode && DB.users[u].memberCode === input)) {
+            foundUser = u; break;
+        }
+    }
+    if (!foundUser) { err.textContent = 'Identifiant incorrect'; err.classList.add('show'); return; }
+    
+    var storedPassword = decrypt(DB.users[foundUser].password);
+    if (storedPassword !== p) { err.textContent = 'Mot de passe incorrect'; err.classList.add('show'); return; }
+    
+    currentUser = foundUser;
+    closeModal('modal-login');
+    showToast('🙏 Bienvenue ' + foundUser + ' !');
+    showPage('page-main');
+}
+
+function updateHeroStat() {
+    var el = document.getElementById('hero-stat-membres');
+    if (el) el.textContent = Object.keys(DB.users).length;
+}
+
+// ============================================================
+// ADMIN
+// ============================================================
+function openAdminAuth() {
+    document.getElementById('admin-auth-input').value = '';
+    document.getElementById('admin-auth-error').classList.remove('show');
+    openModal('modal-admin-auth');
+}
+
+function checkAdminAuth() {
+    var val = document.getElementById('admin-auth-input').value.trim().toUpperCase();
+    var err = document.getElementById('admin-auth-error');
+    err.classList.remove('show');
+    if (val === 'OJJC POUR JESUS-CHRIST') {
+        closeModal('modal-admin-auth');
+        showToast('🛡️ Accès admin accordé');
+        showPage('page-admin');
+    } else {
+        err.textContent = 'Accès refusé';
+        err.classList.add('show');
+    }
+}
+
+function openInterditAuth() {
+    document.getElementById('interdit-auth-input').value = '';
+    document.getElementById('interdit-auth-error').classList.remove('show');
+    openModal('modal-interdit-auth');
+}
+
+function checkInterditAuth() {
+    var val = document.getElementById('interdit-auth-input').value.trim().toUpperCase();
+    var err = document.getElementById('interdit-auth-error');
+    err.classList.remove('show');
+    if (val === 'OJJC-2026-2026') {
+        interditAuthorized = true;
+        closeModal('modal-interdit-auth');
+        showToast('🔐 Accès interdit accordé');
+        renderInterdit();
+        var interditTab = document.querySelector('.admin-tab-btn[style*="color:#500050"]');
+        if (interditTab) switchAdminTab('as-interdit', interditTab);
+    } else {
+        err.textContent = 'Code incorrect';
+        err.classList.add('show');
+    }
+}
+
+function switchAdminTab(tabId, btn) {
+    document.querySelectorAll('.admin-section').forEach(function(s) { s.classList.remove('active'); });
+    document.querySelectorAll('.admin-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+    if (tabId === 'as-interdit') renderInterdit();
+    if (tabId === 'as-membres') renderMembres();
+    if (tabId === 'as-corbeille') renderCorbeille();
+}
+
+function refreshAdminStats() {
+    var vals = Object.values(DB.fiches);
+    var total = vals.length;
+    var actif = vals.filter(function(f) { return f.statut === 'MEMBRE ACTIF'; }).length;
+    var resp = vals.filter(function(f) { return f.statut === 'RESPONSABLE'; }).length;
+    document.getElementById('a-total').textContent = total;
+    document.getElementById('a-actif').textContent = actif;
+    document.getElementById('a-resp').textContent = resp;
+    document.getElementById('a-nb-act').textContent = DB.activites.length;
+}
+
+function renderMembres(filter) {
+    var tbody = document.getElementById('admin-tbody');
+    var q = (filter || '').toLowerCase();
+    var keys = Object.keys(DB.fiches);
+    if (!keys.length) {
+        tbody.innerHTML = '<tr><td colspan="6">Aucun membre</td></tr>';
+        return;
+    }
+    var html = '';
+    var i = 0;
+    for (var u of keys) {
+        var f = DB.fiches[u];
+        var nom = f.nom ? decrypt(f.nom) : '—';
+        if (q && !nom.toLowerCase().includes(q) && !(f.famille || '').toLowerCase().includes(q)) continue;
+        i++;
+        var bc = f.statut === 'RESPONSABLE' ? 'badge-resp' : 'badge-actif';
+        html += '<tr><td>' + i + '</td><td>' + sanitize(nom) + '</td><td><code>' + (f.memberCode || '—') + '</code></td><td>' + sanitize(f.contact ? decrypt(f.contact) : '—') + '</td><td>' + sanitize(f.famille || '—') + '</td><td><span class="badge ' + bc + '">' + (f.statut || '—') + '</span></td></tr>';
+    }
+    tbody.innerHTML = html || '<tr><td colspan="6">Aucun résultat</td></tr>';
+}
+
+function renderInterdit(filter) {
+    var tbody = document.getElementById('interdit-tbody');
+    if (!interditAuthorized) {
+        tbody.innerHTML = '<tr><td colspan="6">🔒 Accès restreint</td></tr>';
+        return;
+    }
+    var q = (filter || '').toLowerCase();
+    var keys = Object.keys(DB.users);
+    if (!keys.length) {
+        tbody.innerHTML = '<tr><td colspan="6">Aucun membre</td></tr>';
+        return;
+    }
+    var html = '';
+    var i = 0;
+    for (var u of keys) {
+        var user = DB.users[u];
+        var f = DB.fiches[u] || {};
+        var nom = f.nom ? decrypt(f.nom) : '<i>Non renseigné</i>';
+        var famille = f.famille || '—';
+        var pwd = decrypt(user.password) || '???';
+        if (q && !nom.toLowerCase().includes(q) && !u.includes(q) && !famille.toLowerCase().includes(q)) continue;
+        i++;
+        html += '<tr><td>' + i + '</td><td>' + sanitize(nom) + '</td><td><code>' + (user.memberCode || '—') + '</code></td><td>@' + sanitize(u) + '</td><td><span class="pw-blur">' + sanitize(pwd) + '</span></td><td>' + sanitize(famille) + '</td></tr>';
+    }
+    tbody.innerHTML = html || '<tr><td colspan="6">Aucun résultat</td></tr>';
+}
+
+function renderCorbeille() {
+    var tbody = document.getElementById('corbeille-tbody');
+    if (!DB.corbeille.length) {
+        tbody.innerHTML = '<tr><td colspan="5">Corbeille vide</td></tr>';
+        return;
+    }
+    var html = '';
+    for (var i = 0; i < DB.corbeille.length; i++) {
+        var f = DB.corbeille[i];
+        var nom = f.nom ? decrypt(f.nom) : '—';
+        var dateSuppr = f.supprimeLe ? new Date(f.supprimeLe).toLocaleDateString() : '—';
+        html += '<tr><td>' + (i + 1) + '</td><td>' + sanitize(nom) + '</td><td>' + sanitize(f.famille || '—') + '</td><td>' + dateSuppr + '</td><td><button class="btn-tbl-restore" onclick="restaurerMembre(' + i + ')">♻️</button></td></tr>';
+    }
+    tbody.innerHTML = html;
+}
+
+function restaurerMembre(index) {
+    var f = DB.corbeille[index];
+    if (!f) return;
+    DB.fiches[f.username] = f;
+    DB.corbeille.splice(index, 1);
+    saveAll();
+    renderCorbeille();
+    renderMembres();
+    refreshAdminStats();
+    showToast('Membre restauré');
+}
+
+function exportCSV() {
+    var lines = [['Nom', 'Contact', 'Famille', 'Statut', 'Code']];
+    for (var u in DB.fiches) {
+        var f = DB.fiches[u];
+        var nom = f.nom ? decrypt(f.nom) : '';
+        var contact = f.contact ? decrypt(f.contact) : '';
+        lines.push([nom, contact, f.famille || '', f.statut || '', f.memberCode || '']);
+    }
+    var content = lines.map(l => l.join(';')).join('\n');
+    var blob = new Blob(['\uFEFF' + content], { type: 'text/csv' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'membres.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
+function exportInterditCSV() {
+    if (!interditAuthorized) { showToast('Accès non autorisé', 'var(--rouge)'); return; }
+    var lines = [['Nom', 'Code adhérent', 'Identifiant', 'Mot de passe', 'Famille']];
+    for (var u in DB.users) {
+        var user = DB.users[u];
+        var f = DB.fiches[u] || {};
+        var nom = f.nom ? decrypt(f.nom) : '';
+        var pwd = decrypt(user.password) || '';
+        lines.push([nom, user.memberCode || '', u, pwd, f.famille || '']);
+    }
+    var content = lines.map(l => l.join(';')).join('\n');
+    var blob = new Blob(['\uFEFF' + content], { type: 'text/csv' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'identifiants_membres.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
+// ============================================================
+// ACTIVITÉS
+// ============================================================
+function addActivite() {
+    var titre = document.getElementById('act-titre').value.trim();
+    if (!titre) { showToast('Entrez un titre', 'var(--rouge)'); return; }
+    DB.activites.unshift({ id: Date.now(), titre: titre, date: document.getElementById('act-date').value, desc: document.getElementById('act-desc').value.trim() });
+    saveAll();
+    document.getElementById('act-titre').value = '';
+    document.getElementById('act-date').value = '';
+    document.getElementById('act-desc').value = '';
+    renderAdminActivites();
+    showToast('✅ Activité ajoutée');
+}
+
+function renderAdminActivites() {
+    var c = document.getElementById('activites-admin-list');
+    if (!c) return;
+    if (!DB.activites.length) { c.innerHTML = '<p>Aucune activité</p>'; return; }
+    var html = '';
+    for (var a of DB.activites) {
+        var dateStr = a.date ? new Date(a.date).toLocaleDateString() : '—';
+        html += '<div class="act-admin-card"><div class="act-admin-thumb">📸</div><div><div class="act-admin-titre">' + sanitize(a.titre) + '</div><div class="act-admin-date">' + dateStr + '</div>' + (a.desc ? '<div>' + sanitize(a.desc) + '</div>' : '') + '<button class="btn-tbl-del" onclick="deleteActivite(' + a.id + ')">Supprimer</button></div></div>';
+    }
+    c.innerHTML = html;
+}
+
+function deleteActivite(id) {
+    DB.activites = DB.activites.filter(function(a) { return a.id !== id; });
+    saveAll();
+    renderAdminActivites();
+}
+
+// ============================================================
+// CANTIQUES
+// ============================================================
+function addCantique() {
+    var titre = document.getElementById('cantique-titre').value.trim();
+    var type = document.getElementById('cantique-type').value;
+    var file = document.getElementById('cantique-file').files[0];
+    if (!titre || !file) { showToast('Remplissez tous les champs', 'var(--rouge)'); return; }
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+        DB.cantiques.unshift({ id: Date.now(), titre: titre, type: type, dataUrl: ev.target.result, fileName: file.name });
+        saveAll();
+        renderAdminCantiques();
+        showToast('✅ Cantique ajouté');
+    };
+    reader.readAsDataURL(file);
+}
+
+function renderAdminCantiques() {
+    var c = document.getElementById('cantiques-admin-list');
+    if (!c) return;
+    if (!DB.cantiques.length) { c.innerHTML = '<p>Aucun cantique</p>'; return; }
+    var html = '';
+    for (var cant of DB.cantiques) {
+        html += '<div class="cantique-card"><div class="cantique-icon">' + (cant.type === 'Audio' ? '🎵' : '🎬') + '</div><div><b>' + sanitize(cant.titre) + '</b><br>' + cant.type + '</div><button class="btn-tbl-del" onclick="deleteCantique(' + cant.id + ')">🗑</button></div>';
+    }
+    c.innerHTML = html;
+}
+
+function deleteCantique(id) {
+    DB.cantiques = DB.cantiques.filter(function(c) { return c.id !== id; });
+    saveAll();
+    renderAdminCantiques();
+}
+
+// ============================================================
+// PRÉSIDENTS
+// ============================================================
+function addPresident() {
+    var nom = document.getElementById('pres-nom').value.trim();
+    var periode = document.getElementById('pres-periode').value.trim();
+    if (!nom || !periode) { showToast('Remplissez les champs', 'var(--rouge)'); return; }
+    DB.presidents.push({ id: Date.now(), nom: nom, periode: periode, note: document.getElementById('pres-note').value.trim() });
+    saveAll();
+    document.getElementById('pres-nom').value = '';
+    document.getElementById('pres-periode').value = '';
+    document.getElementById('pres-note').value = '';
+    renderAdminPresidents();
+    showToast('✅ Président ajouté');
+}
+
+function renderAdminPresidents() {
+    var c = document.getElementById('presidents-admin-list');
+    if (!c) return;
+    if (!DB.presidents.length) { c.innerHTML = '<p>Aucun président</p>'; return; }
+    var html = '';
+    for (var p of DB.presidents) {
+        html += '<div class="pres-admin-card"><div style="width:46px;height:46px;border-radius:50%;background:var(--vert);display:flex;align-items:center;justify-content:center;color:#fff;">👑</div><div><b>' + sanitize(p.nom) + '</b><br>' + sanitize(p.periode) + '<br>' + (p.note || '') + '</div><button class="btn-tbl-del" onclick="deletePresident(' + p.id + ')">🗑</button></div>';
+    }
+    c.innerHTML = html;
+}
+
+function deletePresident(id) {
+    DB.presidents = DB.presidents.filter(function(p) { return p.id !== id; });
+    saveAll();
+    renderAdminPresidents();
+}
+
+// ============================================================
+// BUREAU
+// ============================================================
+function addBureauMembre() {
+    var nom = document.getElementById('bureau-nom').value.trim();
+    var mandat = document.getElementById('bureau-mandat').value.trim();
+    var resp = document.getElementById('bureau-resp').value.trim();
+    if (!nom || !mandat || !resp) { showToast('Remplissez tous les champs', 'var(--rouge)'); return; }
+    DB.bureau.push({ id: Date.now(), nom: nom, mandat: mandat, responsabilite: resp });
+    saveAll();
+    document.getElementById('bureau-nom').value = '';
+    document.getElementById('bureau-mandat').value = '';
+    document.getElementById('bureau-resp').value = '';
+    renderAdminBureau();
+    showToast('✅ Membre ajouté');
+}
+
+function renderAdminBureau() {
+    var c = document.getElementById('bureau-admin-list');
+    if (!c) return;
+    if (!DB.bureau.length) { c.innerHTML = '<p>Aucun membre</p>'; return; }
+    var html = '';
+    for (var m of DB.bureau) {
+        html += '<div class="bureau-admin-card"><div class="bureau-photo">👤</div><div><b>' + sanitize(m.nom) + '</b><br>' + sanitize(m.mandat) + '<br>' + sanitize(m.responsabilite) + '</div><button class="btn-tbl-del" onclick="deleteBureauMembre(' + m.id + ')">🗑</button></div>';
+    }
+    c.innerHTML = html;
+}
+
+function deleteBureauMembre(id) {
+    DB.bureau = DB.bureau.filter(function(b) { return b.id !== id; });
+    saveAll();
+    renderAdminBureau();
+}
+
+// ============================================================
+// JEUX BIBLIQUES
+// ============================================================
+var BIBLE_GAMES = {
+    qcm: { name: "📝 QCM Biblique", icon: "📝" },
+    vf: { name: "✅ Vrai ou Faux", icon: "✅" },
+    complet: { name: "🔍 Complétez le verset", icon: "🔍" },
+    chronologie: { name: "⏳ Chronologie", icon: "⏳" },
+    identite: { name: "👤 Qui est-ce ?", icon: "👤" },
+    paroles: { name: "💬 Paroles de Jésus", icon: "💬" },
+    croises: { name: "🧩 Mots Croisés", icon: "🧩" },
+    aventure: { name: "⚔️ Aventure Biblique", icon: "⚔️" },
+    devinette: { name: "🎭 Devinette", icon: "🎭" },
+    tresor: { name: "⭐ Trésor Céleste", icon: "⭐" }
+};
+
+function renderGameList() {
+    var container = document.getElementById('game-list');
+    if (!container) return;
+    var html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;">';
+    for (var key in BIBLE_GAMES) {
+        var g = BIBLE_GAMES[key];
+        html += '<div class="game-card" onclick="startGame(\'' + key + '\')">' +
+            '<div style="font-size:2.5rem;">' + g.icon + '</div>' +
+            '<h3>' + g.name + '</h3>' +
+            '<p style="font-size:0.85rem;color:var(--texte-muted);">10 niveaux · 20 questions</p>' +
+            '<button class="btn-hero btn-hero-main" style="padding:0.4rem 1.2rem;font-size:0.85rem;margin-top:0.5rem;">Jouer</button>' +
+        '</div>';
+    }
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+function loginGame() {
+    var username = document.getElementById('game-username').value.trim();
+    if (!username) { showToast('Entrez votre nom !', 'var(--rouge)'); return; }
+    currentGamePlayer = username;
+    document.getElementById('game-login').style.display = 'none';
+    document.getElementById('game-dashboard').style.display = 'block';
+    document.getElementById('game-username-display').textContent = username;
+    renderGameList();
+}
+
+function logoutGame() {
+    currentGamePlayer = null;
+    document.getElementById('game-login').style.display = 'block';
+    document.getElementById('game-dashboard').style.display = 'none';
+    showToast('🚪 Déconnexion');
+}
+
+function startGame(gameKey) {
+    showToast('🎮 Jeu lancé: ' + BIBLE_GAMES[gameKey].name);
+}
+
+// ============================================================
+// MÉDITATION - 25 THÈMES
+// ============================================================
+var MEDITATION_PLANS = {
+    chercher_dieu: { name: "🙏 Je cherche Dieu", description: "Découvrir Dieu et sa volonté", level: "Débutant", days: 30,
+        verses: [
+            { day: 1, ref: "Jérémie 29:13", text: "Vous me chercherez et vous me trouverez, si vous me cherchez de tout votre cœur." },
+            { day: 2, ref: "Matthieu 7:7", text: "Demandez, et l'on vous donnera ; cherchez, et vous trouverez ; frappez, et l'on vous ouvrira." }
+        ]
+    },
+    delivrance: { name: "🕊️ Je veux une délivrance", description: "Trouver la liberté en Christ", level: "Intermédiaire", days: 30,
+        verses: [
+            { day: 1, ref: "Jean 8:36", text: "Si donc le Fils vous affranchit, vous serez véritablement libres." },
+            { day: 2, ref: "Galates 5:1", text: "C'est pour la liberté que Christ nous a affranchis." }
+        ]
+    },
+    dons_spirituels: { name: "🔥 Dons spirituels", description: "Découvrez vos dons", level: "Avancé", days: 30,
+        verses: [
+            { day: 1, ref: "1 Corinthiens 12:4", text: "Il y a diversité de dons, mais le même Esprit." },
+            { day: 2, ref: "Romains 12:6", text: "Nous avons des dons différents, selon la grâce." }
+        ]
+    },
+    amour_dieu: { name: "❤️ L'amour de Dieu", description: "Méditez sur l'amour infini de Dieu", level: "Débutant", days: 30,
+        verses: [
+            { day: 1, ref: "Jean 3:16", text: "Car Dieu a tant aimé le monde qu'il a donné son Fils unique." },
+            { day: 2, ref: "Romains 8:38-39", text: "Rien ne pourra nous séparer de l'amour de Dieu." }
+        ]
+    },
+    foi_et_confiance: { name: "🙌 Foi et Confiance", description: "Renforcez votre foi", level: "Intermédiaire", days: 30,
+        verses: [
+            { day: 1, ref: "Proverbes 3:5-6", text: "Confie-toi en l'Éternel de tout ton cœur." },
+            { day: 2, ref: "Hébreux 11:1", text: "La foi est une ferme assurance des choses qu'on espère." }
+        ]
+    },
+    paix_interieure: { name: "🕊️ Paix intérieure", description: "Trouver la paix de Dieu", level: "Débutant", days: 30,
+        verses: [
+            { day: 1, ref: "Jean 14:27", text: "Je vous laisse la paix, je vous donne ma paix." },
+            { day: 2, ref: "Philippiens 4:6-7", text: "La paix de Dieu, qui surpasse toute intelligence, gardera vos cœurs." }
+        ]
+    },
+    pardon: { name: "🤝 Le Pardon", description: "Apprendre à pardonner comme Dieu", level: "Intermédiaire", days: 30,
+        verses: [
+            { day: 1, ref: "Éphésiens 4:32", text: "Soyez bons les uns envers les autres, pleins de compassion, vous pardonnant réciproquement." },
+            { day: 2, ref: "Colossiens 3:13", text: "Supportez-vous les uns les autres et pardonnez-vous mutuellement." }
+        ]
+    },
+    esperance: { name: "🌟 L'Espérance", description: "Garder l'espérance en Christ", level: "Débutant", days: 30,
+        verses: [
+            { day: 1, ref: "Romains 15:13", text: "Que le Dieu de l'espérance vous remplisse de toute joie." },
+            { day: 2, ref: "Jérémie 29:11", text: "Car je connais les projets que j'ai formés sur vous, projets de paix." }
+        ]
+    },
+    joie_chretienne: { name: "🎵 La Joie Chrétienne", description: "Expérimenter la joie du Seigneur", level: "Débutant", days: 30,
+        verses: [
+            { day: 1, ref: "Philippiens 4:4", text: "Réjouissez-vous toujours dans le Seigneur." },
+            { day: 2, ref: "Néhémie 8:10", text: "La joie de l'Éternel est votre force." }
+        ]
+    },
+    perseverance: { name: "💪 La Persévérance", description: "Tenir bon dans la foi", level: "Avancé", days: 30,
+        verses: [
+            { day: 1, ref: "Jacques 1:12", text: "Heureux l'homme qui supporte patiemment l'épreuve." },
+            { day: 2, ref: "Romains 5:3-4", text: "L'affliction produit la persévérance." }
+        ]
+    },
+    gratitude: { name: "🙏 La Gratitude", description: "Apprendre à rendre grâce", level: "Débutant", days: 30,
+        verses: [
+            { day: 1, ref: "1 Thessaloniciens 5:18", text: "Rendez grâces en toutes choses." },
+            { day: 2, ref: "Psaumes 100:4", text: "Entrez dans ses portes avec des actions de grâces." }
+        ]
+    },
+    humilite: { name: "🌿 L'Humilité", description: "Vivre dans l'humilité", level: "Intermédiaire", days: 30,
+        verses: [
+            { day: 1, ref: "Philippiens 2:3", text: "Par humilité, estimez les autres supérieurs à vous-mêmes." },
+            { day: 2, ref: "Jacques 4:10", text: "Humiliez-vous devant le Seigneur, et il vous élèvera." }
+        ]
+    },
+    sagesse: { name: "📚 La Sagesse Divine", description: "Acquérir la sagesse de Dieu", level: "Avancé", days: 30,
+        verses: [
+            { day: 1, ref: "Proverbes 9:10", text: "La crainte de l'Éternel est le commencement de la sagesse." },
+            { day: 2, ref: "Jacques 1:5", text: "Si quelqu'un manque de sagesse, qu'il la demande à Dieu." }
+        ]
+    },
+    protection_divine: { name: "🛡️ Protection Divine", description: "La protection de Dieu", level: "Débutant", days: 30,
+        verses: [
+            { day: 1, ref: "Psaumes 91:1-2", text: "Celui qui demeure sous l'abri du Très-Haut se repose à l'ombre du Tout-Puissant." },
+            { day: 2, ref: "Ésaïe 43:2", text: "Si tu traverses les eaux, je serai avec toi." }
+        ]
+    },
+    saintete: { name: "✨ La Sainteté", description: "Vivre une vie sainte", level: "Avancé", days: 30,
+        verses: [
+            { day: 1, ref: "1 Pierre 1:15-16", text: "Soyez saints dans toute votre conduite." },
+            { day: 2, ref: "Lévitique 19:2", text: "Soyez saints, car je suis saint, moi, l'Éternel." }
+        ]
+    },
+    appels_de_dieu: { name: "📯 Les Appels de Dieu", description: "Reconnaître la voix de Dieu", level: "Intermédiaire", days: 30,
+        verses: [
+            { day: 1, ref: "Jean 10:27", text: "Mes brebis entendent ma voix." },
+            { day: 2, ref: "1 Samuel 3:10", text: "Parle, Seigneur, car ton serviteur écoute." }
+        ]
+    },
+    puissance_priere: { name: "🙌 Puissance de la Prière", description: "La prière efficace", level: "Intermédiaire", days: 30,
+        verses: [
+            { day: 1, ref: "Jacques 5:16", text: "La prière fervente du juste a une grande efficacité." },
+            { day: 2, ref: "Philippiens 4:6", text: "En toute chose, faites connaître vos besoins à Dieu." }
+        ]
+    },
+    louange_adoration: { name: "🎶 Louange et Adoration", description: "Adorer Dieu en esprit et en vérité", level: "Débutant", days: 30,
+        verses: [
+            { day: 1, ref: "Psaumes 150:6", text: "Que tout ce qui respire loue l'Éternel." },
+            { day: 2, ref: "Jean 4:23-24", text: "Les vrais adorateurs adoreront le Père en esprit et en vérité." }
+        ]
+    },
+    mission_evangelique: { name: "🌍 Mission Évangélique", description: "Partager l'Évangile", level: "Avancé", days: 30,
+        verses: [
+            { day: 1, ref: "Matthieu 28:19-20", text: "Allez, faites de toutes les nations des disciples." },
+            { day: 2, ref: "Marc 16:15", text: "Allez par tout le monde, et prêchez la bonne nouvelle." }
+        ]
+    },
+    retour_jesus: { name: "⏳ Retour de Jésus", description: "Attendre le retour du Seigneur", level: "Avancé", days: 30,
+        verses: [
+            { day: 1, ref: "Matthieu 24:44", text: "Soyez prêts, car le Fils de l'homme viendra à l'heure où vous n'y penserez pas." },
+            { day: 2, ref: "Apocalypse 22:20", text: "Oui, je viens bientôt. Amen ! Viens, Seigneur Jésus !" }
+        ]
+    },
+    enfants_dieu: { name: "👶 Enfants de Dieu", description: "Notre identité en Christ", level: "Débutant", days: 30,
+        verses: [
+            { day: 1, ref: "Jean 1:12", text: "À tous ceux qui l'ont reçue, elle a donné le pouvoir de devenir enfants de Dieu." },
+            { day: 2, ref: "Romains 8:16", text: "L'Esprit lui-même rend témoignage à notre esprit que nous sommes enfants de Dieu." }
+        ]
+    },
+    amour_prochain: { name: "💕 Aimer son Prochain", description: "Vivre l'amour du prochain", level: "Débutant", days: 30,
+        verses: [
+            { day: 1, ref: "Marc 12:31", text: "Tu aimeras ton prochain comme toi-même." },
+            { day: 2, ref: "Jean 13:34", text: "Aimez-vous les uns les autres, comme je vous ai aimés." }
+        ]
+    },
+    service_chretien: { name: "🤲 Service Chrétien", description: "Servir comme Jésus", level: "Intermédiaire", days: 30,
+        verses: [
+            { day: 1, ref: "Marc 10:45", text: "Le Fils de l'homme est venu, non pour être servi, mais pour servir." },
+            { day: 2, ref: "Galates 5:13", text: "Par l'amour, servez-vous les uns les autres." }
+        ]
+    },
+    union_christ: { name: "🌿 Union avec Christ", description: "Vivre en Christ", level: "Avancé", days: 30,
+        verses: [
+            { day: 1, ref: "Jean 15:5", text: "Je suis le cep, vous êtes les sarments." },
+            { day: 2, ref: "Romains 6:5", text: "Si nous sommes devenus une même plante avec lui par la mort, nous le serons aussi par la résurrection." }
+        ]
+    },
+    parole_vivante: { name: "📖 La Parole Vivante", description: "Méditer la Bible", level: "Intermédiaire", days: 30,
+        verses: [
+            { day: 1, ref: "2 Timothée 3:16", text: "Toute Écriture est inspirée de Dieu et utile pour enseigner." },
+            { day: 2, ref: "Psaumes 119:105", text: "Ta parole est une lampe à mes pieds." }
+        ]
+    }
+};
+
+function renderMeditationPlans() {
+    var container = document.getElementById('meditation-plans-list');
+    if (!container) return;
+    var html = '';
+    for (var key in MEDITATION_PLANS) {
+        var plan = MEDITATION_PLANS[key];
+        html += '<div class="meditation-plan" onclick="openMeditationPlan(\'' + key + '\')">' +
+            '<h3>' + plan.name + '</h3>' +
+            '<p style="color:var(--texte-muted);font-size:0.9rem;">' + plan.description + '</p>' +
+            '<div class="days">📅 ' + plan.days + ' jours</div>' +
+            '<span class="level">' + plan.level + '</span>' +
+            '<button style="margin-top:0.5rem;padding:0.4rem 1rem;background:var(--vert);color:#fff;border:none;border-radius:50px;cursor:pointer;">Commencer</button>' +
+        '</div>';
+    }
+    container.innerHTML = html;
+}
+
+function openMeditationPlan(planKey) {
+    var plan = MEDITATION_PLANS[planKey];
+    if (!plan) return;
+    document.getElementById('meditation-selector').style.display = 'none';
+    document.getElementById('meditation-viewer').style.display = 'block';
+    document.getElementById('meditation-plan-title').textContent = plan.name;
+    
+    var calendarContainer = document.getElementById('meditation-calendar-container');
+    var html = '<div style="margin-bottom:1rem;"><p style="color:var(--texte-muted);">' + plan.description + '</p>';
+    html += '<p style="font-weight:700;color:#2980b9;">📅 ' + plan.days + ' jours de méditation</p></div>';
+    
+    var today = new Date();
+    var month = today.getMonth();
+    var year = today.getFullYear();
+    var firstDay = new Date(year, month, 1).getDay();
+    var daysInMonth = new Date(year, month + 1, 0).getDate();
+    
+    html += '<div style="font-weight:700;margin-bottom:0.5rem;">' + new Date(year, month).toLocaleString('fr', { month: 'long', year: 'numeric' }) + '</div>';
+    html += '<div class="meditation-calendar">';
+    var weekdays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+    for (var d of weekdays) {
+        html += '<div style="font-size:0.6rem;text-align:center;font-weight:700;color:var(--texte-muted);">' + d + '</div>';
+    }
+    for (var i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
+        html += '<div></div>';
+    }
+    for (var day = 1; day <= daysInMonth && day <= plan.days; day++) {
+        var isToday = (day === today.getDate() && month === today.getMonth() && year === today.getFullYear());
+        var hasVerse = day <= plan.verses.length;
+        var dayClass = 'day' + (isToday ? ' today' : '') + (hasVerse ? ' has-verse' : '');
+        html += '<div class="' + dayClass + '" onclick="showMeditationDay(\'' + planKey + '\',' + day + ')">' + day + '</div>';
+    }
+    html += '</div>';
+    calendarContainer.innerHTML = html;
+    showMeditationDay(planKey, 1);
+}
+
+function showMeditationDay(planKey, day) {
+    var plan = MEDITATION_PLANS[planKey];
+    if (!plan) return;
+    var container = document.getElementById('meditation-day-content');
+    var verseIndex = (day - 1) % plan.verses.length;
+    var verse = plan.verses[verseIndex];
+    
+    var html = '<div style="background:#f8f9fa;padding:1.5rem;border-radius:16px;border-left:4px solid #2980b9;">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;">' +
+        '<h4 style="color:#2980b9;">📖 Jour ' + day + '/' + plan.days + '</h4>' +
+        '<span style="background:#2980b9;color:#fff;padding:0.2rem 0.8rem;border-radius:50px;font-size:0.7rem;">' + plan.level + '</span>' +
+        '</div>' +
+        '<div class="meditation-verse">' +
+        '<div class="ref">📖 ' + verse.ref + '</div>' +
+        '<div class="text">"' + verse.text + '"</div>' +
+        '</div>' +
+        '<div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;">' +
+        (day > 1 ? '<button class="btn-tbl-edit" onclick="showMeditationDay(\'' + planKey + '\',' + (day - 1) + ')">◀ Précédent</button>' : '') +
+        (day < plan.days ? '<button class="btn-tbl-edit" onclick="showMeditationDay(\'' + planKey + '\',' + (day + 1) + ')">Suivant ▶</button>' : '') +
+        '<button class="btn-tbl" style="background:#2980b9;color:#fff;" onclick="showMeditationDay(\'' + planKey + '\',1)">⬅ Début</button>' +
+        '</div>' +
+    '</div>';
+    container.innerHTML = html;
+}
+
+function closeMeditation() {
+    document.getElementById('meditation-selector').style.display = 'block';
+    document.getElementById('meditation-viewer').style.display = 'none';
+}
+
+// ============================================================
+// BIBLE INFINIE
+// ============================================================
+function initBibleInfinite() {
+    var select = document.getElementById('bible-book-select');
+    select.innerHTML = '';
+    for (var i = 0; i < BIBLE_BOOKS.length; i++) {
+        var option = document.createElement('option');
+        option.value = i;
+        option.textContent = BIBLE_BOOKS[i];
+        select.appendChild(option);
+    }
+    select.value = 0;
+    currentBookIndex = 0;
+    currentChapter = 1;
+    loadBibleChapter(0, 1);
+}
+
+function loadBibleChapter(bookIndex, chapter) {
+    if (isBibleLoading) return;
+    isBibleLoading = true;
+    
+    var bookName = BIBLE_BOOKS[bookIndex];
+    document.getElementById('bible-current-book').textContent = bookName;
+    document.getElementById('bible-current-chapter').textContent = chapter;
+    document.getElementById('bible-chapter-input').value = chapter;
+    document.getElementById('bible-book-select').value = bookIndex;
+    
+    var container = document.getElementById('bible-infinite-content');
+    container.innerHTML = '<div style="text-align:center;padding:2rem;">📖 Chargement...</div>';
+    
+    // Utiliser l'API biblique
+    var url = 'https://bible-api.fr/lsg/' + encodeURIComponent(bookName) + '/' + chapter;
+    
+    fetch(url)
+        .then(function(response) {
+            if (!response.ok) throw new Error('Erreur réseau');
+            return response.json();
+        })
+        .then(function(data) {
+            if (data.verses && data.verses.length) {
+                var html = '';
+                for (var v of data.verses) {
+                    html += '<div class="verse"><span class="num">' + v.number + '</span><span class="text">' + v.text + '</span></div>';
+                }
+                container.innerHTML = html;
+                document.getElementById('bible-verse-count').textContent = data.verses.length + ' versets';
+                document.getElementById('bible-chapter-info').textContent = 'Chapitre ' + chapter;
+                bibleCache[bookIndex + '_' + chapter] = data;
+            } else {
+                container.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--texte-muted);">Aucun verset trouvé pour ce chapitre.</div>';
+            }
+            isBibleLoading = false;
+        })
+        .catch(function(error) {
+            console.error('Erreur chargement Bible:', error);
+            container.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--rouge);">⚠️ Erreur de chargement. Vérifiez votre connexion.</div>';
+            isBibleLoading = false;
+        });
+}
+
+function changeBibleBook(index) {
+    currentBookIndex = parseInt(index);
+    currentChapter = 1;
+    loadBibleChapter(currentBookIndex, currentChapter);
+}
+
+function changeBibleChapter(chapter) {
+    if (chapter < 1) chapter = 1;
+    currentChapter = chapter;
+    loadBibleChapter(currentBookIndex, currentChapter);
+}
+
+function nextChapter() {
+    currentChapter++;
+    loadBibleChapter(currentBookIndex, currentChapter);
+}
+
+function prevChapter() {
+    if (currentChapter > 1) {
+        currentChapter--;
+        loadBibleChapter(currentBookIndex, currentChapter);
+    } else {
+        showToast('Déjà au premier chapitre', '#2980b9');
+    }
+}
+
+function searchBibleInfinite() {
+    var searchInput = document.getElementById('bible-chapter-input');
+    var query = searchInput.value.trim();
+    if (!query) return;
+    
+    // Si c'est un nombre, charger le chapitre
+    if (!isNaN(query) && query > 0) {
+        changeBibleChapter(parseInt(query));
+        return;
+    }
+    
+    // Sinon, chercher dans la Bible
+    showToast('🔍 Recherche en cours...', '#2980b9');
+    var container = document.getElementById('bible-infinite-content');
+    container.innerHTML = '<div style="text-align:center;padding:2rem;">🔍 Recherche de "' + sanitize(query) + '"...</div>';
+    
+    var url = 'https://bible-api.fr/lsg/search?q=' + encodeURIComponent(query);
+    fetch(url)
+        .then(function(response) {
+            if (!response.ok) throw new Error('Erreur réseau');
+            return response.json();
+        })
+        .then(function(data) {
+            if (data.results && data.results.length) {
+                var html = '';
+                var count = 0;
+                for (var r of data.results) {
+                    if (count >= 50) break;
+                    html += '<div class="verse"><span style="font-weight:700;color:#2980b9;">' + sanitize(r.reference) + '</span><br><span class="text">' + sanitize(r.text) + '</span></div>';
+                    count++;
+                }
+                container.innerHTML = html || '<div style="text-align:center;padding:2rem;color:var(--texte-muted);">Aucun résultat trouvé.</div>';
+                document.getElementById('bible-verse-count').textContent = count + ' résultats';
+            } else {
+                container.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--texte-muted);">Aucun résultat trouvé pour "' + sanitize(query) + '"</div>';
+            }
+        })
+        .catch(function(error) {
+            container.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--rouge);">⚠️ Erreur de recherche.</div>';
+        });
+}
+
+// ============================================================
+// INITIALISATION
+// ============================================================
+document.querySelectorAll('.modal').forEach(function(m) {
+    m.addEventListener('click', function(e) {
+        if (e.target === m) m.classList.remove('active');
+    });
+});
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') document.querySelectorAll('.modal.active').forEach(function(m) { m.classList.remove('active'); });
+});
+
+// Initialisation
+dbLoadAll();
+renderMeditationPlans();
+initBibleInfinite();
+
+// Initialiser les données de jeu si nécessaire
+if (!window.BIBLE_GAMES_DATA) {
+    window.BIBLE_GAMES_DATA = {};
+}
+
+showToast('📖 Bible infinie disponible !');
+</script>
+</body>
+</html>
